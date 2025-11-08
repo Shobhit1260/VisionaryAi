@@ -5,7 +5,7 @@ import axios from 'axios'
 import { dummyPublishedCreationData } from '../assets/assets';
 import { reportError } from '../utils/reportError';
 import Loader from '../Components/Loader';
-
+axios.defaults.baseURL=import.meta.env.VITE_API_BASE_URL;
 function Community() {
   const [creations,setCreations]=useState([]);
   const [loading ,setLoading]=useState(false);

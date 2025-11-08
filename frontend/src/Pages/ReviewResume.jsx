@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useAuth } from '@clerk/clerk-react';
 import Loader from '../Components/Loader'
 import Markdown from 'react-markdown';
+axios.defaults.baseURL=import.meta.env.VITE_API_BASE_URL;
 function ReviewResume() {
   
   const [input,setInput]=React.useState('')

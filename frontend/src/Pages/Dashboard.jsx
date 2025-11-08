@@ -7,7 +7,7 @@ import axios from 'axios'
 import { reportError } from '../utils/reportError'
 import CreationItems from '../Components/CreationItems'
 import Loader from '../Components/Loader'
-
+axios.defaults.baseURL=import.meta.env.VITE_API_BASE_URL;
 
 function Dashboard() {
   const [creations,setCreations]=useState([]);

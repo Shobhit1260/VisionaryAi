@@ -6,6 +6,7 @@ import { reportError } from '../utils/reportError';
 import { useAuth } from '@clerk/clerk-react'
 import axios from 'axios'
 import Markdown from 'react-markdown'
+axios.defaults.baseURL=import.meta.env.VITE_API_BASE_URL;
 function BlogArticle() {
   const categories = [
     'General','Technology','Health','Business','Lifestyle','Travel','Food','Education'

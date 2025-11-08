@@ -4,12 +4,14 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useAuth } from '@clerk/clerk-react';
 import Loader from '../Components/Loader'
+axios.defaults.baseURL=import.meta.env.VITE_API_BASE_URL;
 function RemoveBackground() {
   
   const [input,setInput]=React.useState('')
   const [content,setContent]=React.useState('');
   const [loading,setLoading]=React.useState(false);
   const {getToken}=useAuth(); 
+
     
     const submitHandler=async(e)=>{
       e.preventDefault();

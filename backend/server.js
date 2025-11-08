@@ -21,7 +21,7 @@ const PORT=process.env.PORT || 5000;
 
 
 app.get('/',(req,res)=>{
-    const sql = neon(`${process.env.DATABASE_URL}`);
+    // const sql = neon(`${process.env.DATABASE_URL}`);
     res.send('API is running....');
 })
 
