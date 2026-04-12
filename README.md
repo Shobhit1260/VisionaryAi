@@ -121,3 +121,10 @@ CLOUDINARY_API_SECRET=
 frontend env:
 VITE_CLERK_PUBLISHABLE_KEY=
 VITE_API_BASE_URL=
+
+production backend env:
+ALLOWED_ORIGINS=https://shobhitsri.me,https://www.shobhitsri.me
+
+notes:
+- Set VITE_API_BASE_URL to the deployed backend URL, for example https://your-backend.onrender.com/api.
+- Keep localhost values only for local development.

@@ -7,11 +7,29 @@ import routes from './routes/route.js';
 import connectToCloudinary from './config/cloudinary.js';
 const app = express();
 
-// Frontend origin (set CLIENT_URL in Render env). Defaults to Vite dev server URL.
-const CLIENT_URL = process.env.CLIENT_URL || 'https://visionaryai-f.onrender.com';
+// Frontend origin(s). Set ALLOWED_ORIGINS as a comma-separated list in production.
+const defaultAllowedOrigins = [
+    'http://localhost:5173',
+    'https://visionaryai-f.onrender.com',
+    'https://shobhitsri.me',
+    'https://www.shobhitsri.me'
+];
+
+const envAllowedOrigins = (process.env.ALLOWED_ORIGINS || process.env.CLIENT_URL || '')
+    .split(',')
+    .map(origin => origin.trim())
+    .filter(Boolean);
+
+const allowedOrigins = [...new Set([...defaultAllowedOrigins, ...envAllowedOrigins])];
 
 app.use(cors({
-    origin: ['http://localhost:5173', CLIENT_URL],
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+
+        return callback(new Error(`CORS blocked for origin: ${origin}`));
+    },
     credentials: true
 }));
 connectToCloudinary();
@@ -23,7 +41,6 @@ const PORT=process.env.PORT || 5000;
 
 
 app.get('/',(req,res)=>{
-    // const sql = neon(`${process.env.DATABASE_URL}`);
     res.send('API is running....');
 })
 
