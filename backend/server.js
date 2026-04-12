@@ -8,10 +8,10 @@ import connectToCloudinary from './config/cloudinary.js';
 const app = express();
 
 // Frontend origin (set CLIENT_URL in Render env). Defaults to Vite dev server URL.
-const CLIENT_URL = 'https://visionaryai-f.onrender.com' ;
+const CLIENT_URL = process.env.CLIENT_URL || 'https://visionaryai-f.onrender.com';
 
 app.use(cors({
-    origin: CLIENT_URL,
+    origin: ['http://localhost:5173', CLIENT_URL],
     credentials: true
 }));
 connectToCloudinary();

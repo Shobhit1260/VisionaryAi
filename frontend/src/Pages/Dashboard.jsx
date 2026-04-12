@@ -3,11 +3,11 @@ import React, { useState } from 'react'
 import {dummyCreationData} from '../assets/assets'
 import { useEffect } from 'react'
 import { Protect, useAuth } from '@clerk/clerk-react'
-import axios from 'axios'
+import axios from '../utils/apiClient'
 import { reportError } from '../utils/reportError'
 import CreationItems from '../Components/CreationItems'
 import Loader from '../Components/Loader'
-axios.defaults.baseURL=import.meta.env.VITE_API_BASE_URL;
+
 
 function Dashboard() {
   const [creations,setCreations]=useState([]);

@@ -1,11 +1,11 @@
 import { useUser, useAuth } from '@clerk/clerk-react';
 import { Heart } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import axios from '../utils/apiClient'
 import { dummyPublishedCreationData } from '../assets/assets';
 import { reportError } from '../utils/reportError';
 import Loader from '../Components/Loader';
-axios.defaults.baseURL=import.meta.env.VITE_API_BASE_URL;
+
 function Community() {
   const [creations,setCreations]=useState([]);
   const [loading ,setLoading]=useState(false);

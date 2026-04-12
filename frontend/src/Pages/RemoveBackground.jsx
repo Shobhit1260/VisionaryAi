@@ -1,10 +1,10 @@
 import React from 'react'
 import {Edit, Eraser, Hash, Sparkles} from 'lucide-react'
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import axios from '../utils/apiClient';
 import { useAuth } from '@clerk/clerk-react';
 import Loader from '../Components/Loader'
-axios.defaults.baseURL=import.meta.env.VITE_API_BASE_URL;
+
 function RemoveBackground() {
   
   const [input,setInput]=React.useState('')

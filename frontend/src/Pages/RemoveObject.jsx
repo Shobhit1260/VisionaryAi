@@ -1,11 +1,11 @@
 import React from 'react'
 import {Edit, Eraser, Hash, Scissors, Sparkles} from 'lucide-react'
 import { useAuth } from '@clerk/clerk-react';
-import axios from 'axios';
+import axios from '../utils/apiClient';
 import { toast } from 'react-toastify';
 import { reportError } from '../utils/reportError';
 import Loader from '../Components/Loader'
-axios.defaults.baseURL=import.meta.env.VITE_API_BASE_URL;
+
 function RemoveObject() {
   const [input,setInput]=React.useState('');
   const [object,setObject]=React.useState('');

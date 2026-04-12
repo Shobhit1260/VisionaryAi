@@ -3,10 +3,10 @@ import {Edit, GalleryHorizontal, Image, Hash, Sparkles} from 'lucide-react'
 import { toast } from 'react-toastify'
 import { reportError } from '../utils/reportError';
 import Loader from '../Components/Loader'
-import axios from 'axios'
+import axios from '../utils/apiClient'
 import { useAuth } from '@clerk/clerk-react'
 import Markdown from 'react-markdown'
-axios.defaults.baseURL=import.meta.env.VITE_API_BASE_URL;
+
 function GenerateImages() {
   const Style = [
     'Realistic','Ghibli style','Anime style','Cartoon','Fantasy style','Realistic style','3D style','Portait style'

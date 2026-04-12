@@ -39,7 +39,7 @@ export const generateArticle = async (req,res)=>{
            },
            ],
            temperature: 0.7,
-           max_tokens: length ,
+           max_tokens: length,
         });
 
         const content = response.choices?.[0]?.message?.content ?? 'No content generated';

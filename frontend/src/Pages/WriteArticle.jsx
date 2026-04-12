@@ -1,13 +1,11 @@
 import React from 'react'
 import {Edit, Sparkles} from 'lucide-react'
-import axios from 'axios'
+import axios from '../utils/apiClient'
 import { useAuth } from '@clerk/clerk-react';
 import { toast } from 'react-toastify';
 import { reportError } from '../utils/reportError';
 import Loader from '../Components/Loader'
 import Markdown from 'react-markdown';
-
-axios.defaults.baseURL=import.meta.env.VITE_API_BASE_URL;
 
 function WriteArticle() {
 

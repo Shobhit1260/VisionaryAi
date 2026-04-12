@@ -2,11 +2,11 @@ import React from 'react'
 import {Edit, Eraser, FileText, Hash, Sparkles} from 'lucide-react'
 import { toast } from 'react-toastify';
 import { reportError } from '../utils/reportError';
-import axios from 'axios';
+import axios from '../utils/apiClient';
 import { useAuth } from '@clerk/clerk-react';
 import Loader from '../Components/Loader'
 import Markdown from 'react-markdown';
-axios.defaults.baseURL=import.meta.env.VITE_API_BASE_URL;
+
 function ReviewResume() {
   
   const [input,setInput]=React.useState('')
