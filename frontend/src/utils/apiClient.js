@@ -1,7 +1,12 @@
 import axios from 'axios';
 
-const fallbackBaseUrl = import.meta.env.DEV ? 'http://localhost:5000/api' : '/api';
+const env = /** @type {{ DEV?: boolean, VITE_API_BASE_URL?: string }} */ (/** @type {any} */ (import.meta).env || {});
 
+const fallbackBaseUrl = env.DEV
+  ? 'http://localhost:5000/api'
+  : 'https://visionaryai-b.onrender.com/api';
+
+/** @param {string | undefined} value */
 function normalizeApiBaseUrl(value) {
   const raw = typeof value === 'string' ? value.trim() : '';
 
@@ -21,6 +26,6 @@ function normalizeApiBaseUrl(value) {
   return `${withoutTrailingSlash}/api`;
 }
 
-axios.defaults.baseURL = normalizeApiBaseUrl(import.meta.env.VITE_API_BASE_URL);
+axios.defaults.baseURL = normalizeApiBaseUrl(env.VITE_API_BASE_URL);
 
 export default axios;

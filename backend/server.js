@@ -7,31 +7,42 @@ import routes from './routes/route.js';
 import connectToCloudinary from './config/cloudinary.js';
 const app = express();
 
-// Frontend origin(s). Set ALLOWED_ORIGINS as a comma-separated list in production.
-const defaultAllowedOrigins = [
+// Only allow the requested frontend origins.
+const allowedOrigins = [
     'http://localhost:5173',
     'https://visionaryai-f.onrender.com',
-    'https://shobhitsri.me',
-    'https://www.shobhitsri.me'
+    'https://shobhitsri.me'
 ];
 
-const envAllowedOrigins = (process.env.ALLOWED_ORIGINS || process.env.CLIENT_URL || '')
-    .split(',')
-    .map(origin => origin.trim())
-    .filter(Boolean);
+/** @param {string} value */
+const normalizeOrigin = (value) => {
+    try {
+        return new URL(value).origin;
+    } catch {
+        return value.replace(/\/+$/, '');
+    }
+};
 
-const allowedOrigins = [...new Set([...defaultAllowedOrigins, ...envAllowedOrigins])];
-
-app.use(cors({
+const corsOptions = {
+    /**
+     * @param {string | undefined} origin
+     * @param {(err: Error | null, allow?: boolean) => void} callback
+     */
     origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
+        if (!origin) return callback(null, true);
+
+        const normalizedRequestOrigin = normalizeOrigin(origin);
+        if (allowedOrigins.includes(normalizedRequestOrigin)) {
             return callback(null, true);
         }
 
         return callback(new Error(`CORS blocked for origin: ${origin}`));
     },
     credentials: true
-}));
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 connectToCloudinary();
 app.use(express.json());
 app.use(clerkMiddleware());
