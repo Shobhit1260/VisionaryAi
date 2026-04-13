@@ -12,7 +12,7 @@ function WriteArticle() {
   const articleLength=[
     {length: 800 ,label: 'Short (500-800 words)'},
     {length: 1200 ,label: 'Medium (800-1200 words)'},
-    {length: 16000 ,label: 'Long (1200+ words)'},
+    {length: 1600 ,label: 'Long (1200+ words)'},
   ]
   const [selectedLength,setSelectedLength]=React.useState(articleLength[0].length)
   const [input,setInput]=React.useState('');
@@ -34,10 +34,10 @@ function WriteArticle() {
       const {data}=await axios.post('/generateArticle',{prompt:prompt, length:selectedLength},
         {headers:{ Authorization:`Bearer ${await getToken()}` }}
       );
-      if(data.success){
+      if(data.success && data.content){
         setContent(data.content)
       } else {
-        toast.error("Something went wrong");
+        toast.error(data.message || "Something went wrong");
       }
     }
     catch(error){

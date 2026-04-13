@@ -2,9 +2,9 @@ import axios from 'axios';
 
 const env = /** @type {{ DEV?: boolean, VITE_API_BASE_URL?: string }} */ (/** @type {any} */ (import.meta).env || {});
 
-const fallbackBaseUrl = env.DEV
-  ? 'http://localhost:5000/api'
-  : 'https://visionaryai-b.onrender.com/api';
+const fallbackBaseUrl = 
+  'http://localhost:5050/api'
+  
 
 /** @param {string | undefined} value */
 function normalizeApiBaseUrl(value) {

@@ -5,6 +5,7 @@ import axios from "axios";
 import {v2 as cloudinary } from 'cloudinary';
 import fs from "fs";
 import pdf from "pdf-parse/lib/pdf-parse.js";
+import FormData from "form-data";
 
 
  
@@ -18,6 +19,7 @@ const openai = new OpenAI({
 
 export const generateArticle = async (req,res)=>{
     try{
+       console.log("hi");
         const {prompt,length}=req.body;
         const userId=req.user.id;
         const plan=req.plan;
@@ -29,9 +31,9 @@ export const generateArticle = async (req,res)=>{
           message:"Limit reached. Upgrade to continue."  
           })
         }
-
+        
         const response = await openai.chat.completions.create({
-           model: "gemini-2.0-flash",
+           model: "gemini-2.5-flash",
            messages: [
            {
             role: "user",
@@ -58,6 +60,7 @@ export const generateArticle = async (req,res)=>{
         })
    }
     catch(error){
+      console.log("error",error);
       return res.json({
             success:false,
             message:"Error in writing article",
@@ -81,7 +84,7 @@ export const generateTitle = async (req,res)=>{
         }
 
         const response = await openai.chat.completions.create({
-           model: "gemini-2.0-flash",
+           model: "gemini-2.5-flash",
            messages: [
            {
             role: "user",
@@ -89,7 +92,7 @@ export const generateTitle = async (req,res)=>{
            },
            ],
            temperature: 0.7,
-           max_tokens: 100 ,
+           max_tokens: 10000 ,
         });
 
         const content = response.choices?.[0]?.message?.content ?? 'No content generated';
@@ -208,7 +211,7 @@ export const removeBackground = async (req,res)=>{
      return res.json({
             success:false,
             message:"Error in removing backgroundImage",
-            error:error.messages
+            error:error.message
       })
     }
   }
@@ -250,7 +253,7 @@ export const removeBackground = async (req,res)=>{
      return res.json({
             success:false,
             message:"Error in removing object from Image",
-            error:error.messages
+            error:error.message
       })
     }
   }
@@ -292,7 +295,7 @@ export const removeBackground = async (req,res)=>{
   feedback on its strengths,weakness and areas for improvement. Resume Content:\n\n${resumeText}`
 
        const response = await openai.chat.completions.create({
-           model: "gemini-2.0-flash",
+           model: "gemini-2.5-flash",
            messages: [
            {
             role: "user",
@@ -300,7 +303,7 @@ export const removeBackground = async (req,res)=>{
            },
            ],
            temperature: 0.7,
-           max_tokens: 12000 ,
+           max_tokens: 2000 ,
         });
 
         const content = response.choices?.[0]?.message?.content ?? 'No content generated';
@@ -311,6 +314,7 @@ export const removeBackground = async (req,res)=>{
         
         return res.json({
           success:true,
+          message:"ok",
           content:content
         }) 
     }

@@ -27,10 +27,10 @@ function RemoveObject() {
         const {data}=await axios.post('/removeObject',formData,
           {headers:{ Authorization:`Bearer ${await getToken()}` }}
         );
-        if(data.success){
+        if(data.success && data.content){
           setContent(data.content)
         } else {
-          toast.error("Something went wrong");
+          toast.error(data.message || "Something went wrong");
         }
       }
       catch(error){

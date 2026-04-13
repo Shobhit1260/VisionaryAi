@@ -8,11 +8,10 @@ import connectToCloudinary from './config/cloudinary.js';
 const app = express();
 
 // Only allow the requested frontend origins.
-const allowedOrigins = [
-    'http://localhost:5173',
-    'https://visionaryai-f.onrender.com',
-    'https://shobhitsri.me'
-];
+const allowedOrigins = 'http://localhost:5173'
+    
+    
+
 
 /** @param {string} value */
 const normalizeOrigin = (value) => {
@@ -23,32 +22,17 @@ const normalizeOrigin = (value) => {
     }
 };
 
-const corsOptions = {
-    /**
-     * @param {string | undefined} origin
-     * @param {(err: Error | null, allow?: boolean) => void} callback
-     */
-    origin: (origin, callback) => {
-        if (!origin) return callback(null, true);
 
-        const normalizedRequestOrigin = normalizeOrigin(origin);
-        if (allowedOrigins.includes(normalizedRequestOrigin)) {
-            return callback(null, true);
-        }
 
-        return callback(new Error(`CORS blocked for origin: ${origin}`));
-    },
-    credentials: true
-};
-
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+app.use(cors({
+  origin: "*"
+}));
 connectToCloudinary();
 app.use(express.json());
 app.use(clerkMiddleware());
-app.use('/api',requireAuth(),routes);
+app.use('/api', routes);
 
-const PORT=process.env.PORT || 5000;
+const PORT=process.env.PORT || 5050;
 
 
 app.get('/',(req,res)=>{

@@ -2,7 +2,6 @@ import { sql } from '../config/db.js';
 
 export const getPublishedCreations=async(req,res)=>{
     try{
-        const userId=req.user.id;
         const creations=await sql `SELECT * FROM creations WHERE publish=true ORDER BY created_at DESC`;
         res.json({
             success:true,
@@ -11,9 +10,10 @@ export const getPublishedCreations=async(req,res)=>{
 
     }
     catch(error){
-       res.json({
-            success:true,
+       return res.status(500).json({
+            success:false,
             message:"Error in fetching creations",
+            error:error.message
         })
 
     }
@@ -21,6 +21,7 @@ export const getPublishedCreations=async(req,res)=>{
 
 export const getUserCreations=async(req,res)=>{
     try{
+        console.log("aa gya")
         const userId=req.user.id;
         const creations=await sql `SELECT * FROM creations WHERE user_id=${userId} ORDER BY created_at DESC`;
         res.json({
@@ -30,9 +31,10 @@ export const getUserCreations=async(req,res)=>{
 
     }
     catch(error){
-       res.json({
-            success:true,
+       return res.status(500).json({
+            success:false,
             message:"Error in fetching creations",
+            error:error.message
         })
 
     }

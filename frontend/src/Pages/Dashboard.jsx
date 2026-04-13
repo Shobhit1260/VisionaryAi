@@ -1,6 +1,5 @@
 import { Gem, Sparkles } from 'lucide-react'
 import React, { useState } from 'react'
-import {dummyCreationData} from '../assets/assets'
 import { useEffect } from 'react'
 import { Protect, useAuth } from '@clerk/clerk-react'
 import axios from '../utils/apiClient'
@@ -10,7 +9,7 @@ import Loader from '../Components/Loader'
 
 
 function Dashboard() {
-  const [creations,setCreations]=useState([]);
+  const [creations,setCreations]=useState(/** @type {Array<{id: string | number}>} */ ([]));
   const [loading ,setLoading]=useState(false);
   const { getToken } = useAuth();
 
@@ -21,12 +20,14 @@ function Dashboard() {
       const { data } = await axios.get('/getuserCreations', { headers: { Authorization: `Bearer ${token}` } });
       if(data && data.success){
         setCreations(data.creations || []);
-      } 
-      setLoading(false);
+      }
     }
 
     catch(error){
       reportError(error, 'Could not load your creations. Showing demo data.');
+    }
+    finally{
+      setLoading(false);
     }
   }
   useEffect(()=>{
