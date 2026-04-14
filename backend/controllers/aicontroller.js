@@ -92,7 +92,7 @@ export const generateTitle = async (req,res)=>{
            },
            ],
            temperature: 0.7,
-           max_tokens: 10000 ,
+           max_tokens: 1000 ,
         });
 
         const content = response.choices?.[0]?.message?.content ?? 'No content generated';
@@ -273,6 +273,20 @@ export const removeBackground = async (req,res)=>{
           })
         }
 
+        if (!resume) {
+          return res.status(400).json({
+            success: false,
+            message: 'Please upload a PDF resume file.',
+          });
+        }
+
+        if (resume.mimetype !== 'application/pdf') {
+          return res.status(400).json({
+            success: false,
+            message: 'Only PDF resumes are supported.',
+          });
+        }
+
       if(resume.size > 5 * 1024 * 1024){
         return res.json({
             success:false,
@@ -281,11 +295,11 @@ export const removeBackground = async (req,res)=>{
       }
     
 
-    const dataBuffer = fs.readFileSync(resume.path);
+    const dataBuffer = resume.buffer || fs.readFileSync(resume.path);
     const parsed = await pdf(dataBuffer);
     const resumeText = parsed.text;
     
-  if (!fs.existsSync(req.file.path)) {
+  if (!resume.buffer && !fs.existsSync(req.file.path)) {
   return res.status(400).json({
     success: false,
     message: "Uploaded file not found on server",
@@ -303,7 +317,7 @@ export const removeBackground = async (req,res)=>{
            },
            ],
            temperature: 0.7,
-           max_tokens: 2000 ,
+           max_tokens: 1000 ,
         });
 
         const content = response.choices?.[0]?.message?.content ?? 'No content generated';
@@ -319,6 +333,7 @@ export const removeBackground = async (req,res)=>{
         }) 
     }
     catch (error) {
+     console.log("error",error); 
      return res.json({
         success: false,
         message: "Error in reviewing resume",

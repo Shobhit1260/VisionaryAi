@@ -46,7 +46,7 @@ function ReviewResume() {
           <Sparkles className='w-6 text-[#00DA83]'/>
           <h1 className='text-xl font-semibold'>Review Resume </h1>
         </div>
-        <p className='mt-6 text-sm font-medium'>Upload image</p>
+        <p className='mt-6 text-sm font-medium'>Upload resume PDF</p>
         <input onChange={(e)=>setInput(e.target.files[0])}  type="file" accept='application/pdf' className='w-full p-2 px-3 mt-2 outline-none text-sm rounded-md border-none  bg-transparent' placeholder='No file chosen' required />
         <span className='text-xs text-gray-500 font-light mt-1'> Supports PDF resume only</span>
       <br/>
