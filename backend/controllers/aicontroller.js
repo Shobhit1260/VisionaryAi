@@ -15,11 +15,15 @@ const openai = new OpenAI({
     baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/"
 });
 
+// Verify API key is set
+if (!process.env.GEMINI_API_KEY) {
+    console.warn("⚠️ WARNING: GEMINI_API_KEY is not set in environment variables!");
+}
 
 
 export const generateArticle = async (req,res)=>{
     try{
-       console.log("hi");
+       console.log("Generating article with prompt:", req.body.prompt?.substring(0, 200));
         const {prompt,length}=req.body;
         const userId=req.user.id;
         const plan=req.plan;
@@ -60,11 +64,25 @@ export const generateArticle = async (req,res)=>{
         })
    }
     catch(error){
-      console.log("error",error);
+      console.error("❌ Article Generation Error:", error);
+      
+      // Detailed error logging for debugging
+      if (error.status === 503) {
+        console.error("🔴 API Service Unavailable (503)");
+        console.error("   - Check if GEMINI_API_KEY is valid");
+        console.error("   - Check if the API is enabled in Google Cloud");
+        console.error("   - Check API quotas and rate limits");
+      }
+      if (error.status === 401 || error.status === 403) {
+        console.error("🔴 Authentication/Authorization Error");
+        console.error("   - Invalid or expired API key");
+      }
+      
       return res.json({
             success:false,
             message:"Error in writing article",
-            error:error.message
+            error:error.message,
+            status: error.status
         })
     }
 }
@@ -111,10 +129,19 @@ export const generateTitle = async (req,res)=>{
         }) 
     }
     catch(error){
+      console.error("❌ Title Generation Error:", error);
+      
+      if (error.status === 503) {
+        console.error("🔴 API Service Unavailable (503)");
+        console.error("   - Check if GEMINI_API_KEY is valid");
+        console.error("   - Check if the API is enabled in Google Cloud");
+      }
+      
       return res.json({
             success:false,
             message:"Error in generating title",
-            error:error.message
+            error:error.message,
+            status: error.status
       })
     }
 }

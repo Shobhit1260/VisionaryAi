@@ -3,7 +3,7 @@ import axios from 'axios';
 const env = /** @type {{ DEV?: boolean, VITE_API_BASE_URL?: string }} */ (/** @type {any} */ (import.meta).env || {});
 
 const fallbackBaseUrl = 
-  'http://localhost:5050/api'
+ [ 'http://localhost:5050/api','https://visionaryai-api-mq9x.onrender.com/api']
   
 
 /** @param {string | undefined} value */
